@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "482945289076",
+    "project_id": "selise-95b34",
+    "storage_bucket": "selise-95b34.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:482945289076:android:77d1b635b4ad693a2bfa21",
+        "android_client_info": {
+          "package_name": "com.example.selise_assignment"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "482945289076-jc85r3ke6pdin13q52b3rbeivcjj01nf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJ8q-J0Kb8VmgyLYdBf1lpM8wFQlNmVgw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "482945289076-jc85r3ke6pdin13q52b3rbeivcjj01nf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

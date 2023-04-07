@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<recources>
+    <string name="app_name">Selise</string>
+    <string name="facebook_app_id">906796040595833</string>
+    <string name="fb_login_protocol_scheme">fb906796040595833</string>
+    <string name="facebook_client_token">9b6ab03346df6777cebd531ab242866b</string>
+</recources>
