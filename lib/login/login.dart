@@ -9,7 +9,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
 class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+  const Login({Key key}) : super(key: key);
 
   @override
   _LoginState createState() => _LoginState();
@@ -35,7 +35,7 @@ class _LoginState extends State<Login> {
       final userData = await FacebookAuth.instance.getUserData();
 
       final facebookAuthCredential = FacebookAuthProvider.credential(
-          facebookLoginResult.accessToken!.token);
+          facebookLoginResult.accessToken.token);
       await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
 
       await FirebaseFirestore.instance.collection('users').add({
@@ -87,8 +87,8 @@ class _LoginState extends State<Login> {
   }
 
   signInWithGoogle() async{
-    GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-    GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+    GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
+    GoogleSignInAuthentication googleAuth = await googleUser?.authentication;
 
     AuthCredential credential = GoogleAuthProvider.credential(
       accessToken: googleAuth?.accessToken,
@@ -142,10 +142,10 @@ class _LoginButton extends StatelessWidget {
   final VoidCallback onPressed;
 
   _LoginButton(
-      {required this.color,
-      required this.text,
-      required this.image,
-      required this.onPressed});
+      { this.color,
+       this.text,
+       this.image,
+       this.onPressed});
 
   @override
   Widget build(BuildContext context) {

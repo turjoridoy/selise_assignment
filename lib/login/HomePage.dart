@@ -16,6 +16,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
+  @override
+  void initState() {
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +36,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             SizedBox(height: 20,),
             Text("Hello ${widget.name}",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+
             _LogoutButton(
                 color: Colors.red,
                 text: "Logout",
@@ -53,9 +59,9 @@ class _LogoutButton extends StatelessWidget {
   final VoidCallback onPressed;
 
   _LogoutButton(
-      {required this.color,
-        required this.text,
-        required this.onPressed});
+      { this.color,
+         this.text,
+         this.onPressed});
 
   @override
   Widget build(BuildContext context) {
