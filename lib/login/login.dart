@@ -18,8 +18,14 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   var loading = false;
 
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   void _loginWithFacebook() async {
-    print("fas");
     setState(() {
       loading = true;
     });
@@ -38,7 +44,7 @@ class _LoginState extends State<Login> {
         'name': userData['name'],
       });
       Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (_) => HomePage()),
+        MaterialPageRoute(builder: (_) => HomePage(userData['name'])),
         (route) => false,
       );
     } on FirebaseException catch (e) {
@@ -80,71 +86,20 @@ class _LoginState extends State<Login> {
     }
   }
 
-  static Future<void> signOut({required BuildContext context}) async {
-    final GoogleSignIn googleSignIn = GoogleSignIn();
+  signInWithGoogle() async{
+    GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
 
-    try {
-      if (!kIsWeb) {
-        await googleSignIn.signOut();
-      }
-      await FirebaseAuth.instance.signOut();
-    } catch (e) {
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   Authentication.customSnackBar(
-      //     content: 'Error signing out. Try again.',
-      //   ),
-      // );
+    AuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken
+    );
+    UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+
+
+    if(userCredential.user != null){
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomePage(userCredential.user?.displayName)));
     }
-  }
-
-  static Future<User?> signInWithGoogle({required BuildContext context}) async {
-    FirebaseAuth auth = FirebaseAuth.instance;
-    User? user;
-
-    if (kIsWeb) {
-      GoogleAuthProvider authProvider = GoogleAuthProvider();
-
-      try {
-        final UserCredential userCredential =
-        await auth.signInWithPopup(authProvider);
-
-        user = userCredential.user;
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      final GoogleSignIn googleSignIn = GoogleSignIn();
-
-      final GoogleSignInAccount? googleSignInAccount =
-      await googleSignIn.signIn();
-
-      if (googleSignInAccount != null) {
-        final GoogleSignInAuthentication googleSignInAuthentication =
-        await googleSignInAccount.authentication;
-
-        final AuthCredential credential = GoogleAuthProvider.credential(
-          accessToken: googleSignInAuthentication.accessToken,
-          idToken: googleSignInAuthentication.idToken,
-        );
-
-        try {
-          final UserCredential userCredential =
-          await auth.signInWithCredential(credential);
-
-          user = userCredential.user;
-        } on FirebaseAuthException catch (e) {
-          if (e.code == 'account-exists-with-different-credential') {
-            // ...
-          } else if (e.code == 'invalid-credential') {
-            // ...
-          }
-        } catch (e) {
-          // ...
-        }
-      }
-    }
-
-    return user;
   }
 
   @override
@@ -165,14 +120,13 @@ class _LoginState extends State<Login> {
                 image: AssetImage('assets/images/facebook.png'),
                 onPressed: () {
                   _loginWithFacebook();
-                  print("ol");
                 }),
             _LoginButton(
                 color: Colors.red,
                 text: "Login with google",
                 image: AssetImage('assets/images/facebook.png'),
                 onPressed: () {
-                  signInWithGoogle(context: context);
+                  signInWithGoogle();
                 }),
           ],
         ),
