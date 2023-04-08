@@ -4,7 +4,7 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:selise_assignment/login/HomePage.dart';
+import 'package:selise_assignment/login/homepage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
@@ -43,9 +43,10 @@ class _LoginState extends State<Login> {
         'imageUrl': userData['picture']['data']['url'],
         'name': userData['name'],
       });
+
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (_) => HomePage(userData['name'])),
-        (route) => false,
+            (route) => false,
       );
     } on FirebaseException catch (e) {
       var content = '';
@@ -99,6 +100,7 @@ class _LoginState extends State<Login> {
 
     if(userCredential.user != null){
       Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomePage(userCredential.user?.displayName)));
+
     }
   }
 
@@ -114,19 +116,20 @@ class _LoginState extends State<Login> {
               height: 10,
             ),
             LoginText("Log in", 22, Colors.grey),
-            _LoginButton(
-                color: Colors.blue,
-                text: "Login with facebook",
-                image: AssetImage('assets/images/facebook.png'),
-                onPressed: () {
-                  _loginWithFacebook();
-                }),
+
             _LoginButton(
                 color: Colors.red,
                 text: "Login with google",
                 image: AssetImage('assets/images/facebook.png'),
                 onPressed: () {
                   signInWithGoogle();
+                }),
+            _LoginButton(
+                color: Colors.blue,
+                text: "Login with facebook",
+                image: AssetImage('assets/images/facebook.png'),
+                onPressed: () {
+                  _loginWithFacebook();
                 }),
           ],
         ),
