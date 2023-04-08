@@ -25,6 +25,9 @@ class _SingleVideoState extends State<SingleVideo> {
   String uid;
   User user;
 
+  final formKey = GlobalKey<FormState>();
+  final TextEditingController commentController = TextEditingController();
+
   final FirebaseAuth _ath = FirebaseAuth.instance;
   void inputData() {
     user = _ath.currentUser;
@@ -48,9 +51,6 @@ class _SingleVideoState extends State<SingleVideo> {
     );
     super.initState();
   }
-
-  final formKey = GlobalKey<FormState>();
-  final TextEditingController commentController = TextEditingController();
 
   Widget commentChild() {
 
@@ -83,7 +83,7 @@ class _SingleVideoState extends State<SingleVideo> {
                         ),
                       ),
                     ),
-                    title: Text(user.displayName,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 12,color: Colors.blue),),
+                    title: Text(e["name"],style: TextStyle(fontWeight: FontWeight.bold,fontSize: 12,color: Colors.blue),),
                     subtitle: Text(e["comment"],style: TextStyle(fontSize: 18,color: Colors.black),),
                     trailing: uid == e["userID"] ? GestureDetector(
                       onTap: () async{
@@ -144,19 +144,18 @@ class _SingleVideoState extends State<SingleVideo> {
       body: Container(
         child: Column(
           children: [
-
-            // Container(
-            //   width: MediaQuery.of(context).size.width,
-            //   height: 300,
-            //   child: YoutubePlayer(
-            //     controller: _controller,
-            //     showVideoProgressIndicator: true,
-            //     progressIndicatorColor: Colors.amber,
-            //     onReady: () {
-            //       print('Player is ready.');
-            //     },
-            //   ),
-            // ),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: 300,
+              child: YoutubePlayer(
+                controller: _controller,
+                showVideoProgressIndicator: true,
+                progressIndicatorColor: Colors.amber,
+                onReady: () {
+                  print('Player is ready.');
+                },
+              ),
+            ),
             SizedBox(height: 20,),
             Text("Comments",style: TextStyle(fontSize:20,fontWeight: FontWeight.bold),),
 
