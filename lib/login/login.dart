@@ -45,7 +45,7 @@ class _LoginState extends State<Login> {
       });
 
       Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (_) => HomePage(userData['name'])),
+        MaterialPageRoute(builder: (_) => HomePage()),
             (route) => false,
       );
     } on FirebaseException catch (e) {
@@ -99,7 +99,7 @@ class _LoginState extends State<Login> {
 
 
     if(userCredential.user != null){
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomePage(userCredential.user?.displayName)));
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomePage()));
 
     }
   }
